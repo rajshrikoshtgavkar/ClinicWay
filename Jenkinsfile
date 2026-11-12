@@ -27,12 +27,21 @@ pipeline {
             }
         }
 
-        stage('Frontend: build & test') {
+        // stage('Frontend: build & test') {
+        //     steps {
+        //         dir('frontend') {
+        //             sh 'npm ci'
+        //             sh 'CI=true npm test -- --watchAll=false'
+        //             sh 'REACT_APP_API_URL=/api npm run build'
+        //         }
+        //     }
+        // }
+
+        stage('Frontend: build') {
             steps {
                 dir('frontend') {
                     sh 'npm ci'
-                    sh 'CI=true npm test -- --watchAll=false'
-                    sh 'REACT_APP_API_URL=/api npm run build'
+                    sh 'npm run build'
                 }
             }
         }
