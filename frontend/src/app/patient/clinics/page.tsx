@@ -49,7 +49,7 @@ const ClinicCard = ({
             <div className="w-16 h-16 rounded-xl ring ring-primary ring-offset-base-100 ring-offset-2">
               <img
                 src={
-                  doctor.profileImage ||
+                  doctor.user.profileImage ||
                   "https://api.dicebear.com/7.x/avataaars/svg?seed=doctor"
                 }
                 alt={doctor?.name}

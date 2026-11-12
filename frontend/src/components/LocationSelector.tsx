@@ -1,44 +1,21 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { IconMapPin } from "@tabler/icons-react";
-import toast from "react-hot-toast";
-import { doctorService } from "@/services/doctorService";
-import Loading from "./Loading";
+import {
+  MAHARASHTRA_DISTRICTS,
+  MAHARASHTRA_TALUKAS,
+} from "@/helper/Constants";
 
-export default function LocationSelector({ onLocationChange }: any) {
-  const [districts, setDistricts] = useState<string[]>([]);
+interface LocationSelectorProps {
+  onLocationChange: (district: string, taluka: string) => void;
+}
+
+export default function LocationSelector({
+  onLocationChange,
+}: LocationSelectorProps) {
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
   const [talukas, setTalukas] = useState<string[]>([]);
   const [selectedTaluka, setSelectedTaluka] = useState<string>("");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchDistricts = async () => {
-      try {
-        setLoading(true);
-        const data = await doctorService.getDistricts();
-        setDistricts(data || []);
-      } catch (e) {
-        toast.error("Could not fetch location data");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDistricts();
-  }, []);
-
-  useEffect(() => {
-    if (selectedDistrict) {
-      doctorService.getTalukasByDistrict(selectedDistrict).then(setTalukas);
-      onLocationChange(selectedDistrict, "");
-    } else {
-      setTalukas([]);
-      onLocationChange("", "");
-    }
-    setSelectedTaluka("");
-  }, [selectedDistrict]);
-
-  if (loading) <Loading />;
 
   return (
     <div className="bg-base-100 border border-base-300 p-6 lg:p-10 rounded-[40px] shadow-sm">
@@ -57,10 +34,16 @@ export default function LocationSelector({ onLocationChange }: any) {
           <select
             className="select select-bordered w-full font-bold bg-base-200 border-none"
             value={selectedDistrict}
-            onChange={(e) => setSelectedDistrict(e.target.value)}
+            onChange={(e) => {
+              const district = e.target.value;
+              setSelectedDistrict(district);
+              setTalukas(MAHARASHTRA_TALUKAS[district] || []);
+              setSelectedTaluka("");
+              onLocationChange(district, "");
+            }}
           >
             <option value="">Choose District</option>
-            {districts.map((d) => (
+            {MAHARASHTRA_DISTRICTS.map((d) => (
               <option key={d} value={d}>
                 {d}
               </option>

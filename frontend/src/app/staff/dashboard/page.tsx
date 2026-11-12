@@ -16,6 +16,24 @@ import {
 import Loading from "@/components/Loading";
 import ErrorState from "@/components/ErrorState";
 
+interface StaffDashboardData {
+  staffName: string;
+  email: string;
+  department: string;
+  isActive: boolean;
+  totalDoctors: number;
+  totalAppointments: number;
+  todayAppointments: number;
+  totalPatients: number;
+  recentAppointments: {
+    id: string | number;
+    patientName: string;
+    appointmentTime: string;
+    status: string;
+    notes?: string | null;
+  }[];
+}
+
 // --- Main Component ---
 
 export default function StaffDashboardPage() {

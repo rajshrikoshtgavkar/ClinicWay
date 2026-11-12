@@ -11,12 +11,9 @@ export const doctorService = {
     return await api.get("/doctor/available");
   },
 
-  async getDoctorsByClinic(clinicName: string) {
-    console.log("DoctorService: fetching doctors for clinic:", clinicName);
-    const response = await api.get("/api/doctor");
-    return response.data.filter(
-      (doctor: any) => doctor.clinicName === clinicName,
-    );
+  async getDoctorsByClinic(clinicId: number) {
+    console.log("DoctorService: fetching doctors for clinic:", clinicId);
+    return await api.get(`/doctor/clinic/${clinicId}`);
   },
 
   async getDoctorById(id: number) {
