@@ -1191,20 +1191,16 @@ const App = () => {
       setShowAddPatient(false);
     };
 
-    const updateStatus = (id, status) => {
-      setPatients(patients.map((p) => (p.id === id ? { ...p, status } : p)));
+    // const updateStatus = (id, status) => {
+    //   setPatients(patients.map((p) => (p.id === id ? { ...p, status } : p)));
+    // };
+
+    const updateStatus = (id: number, status: string) => {
+      setPatients(patients.map((p) =>
+        p.id === id ? { ...p, status } : p
+      ));
     };
 
-    // const updateStatus = (
-    //   id: (typeof patients)[number]["id"],
-    //   status: (typeof patients)[number]["status"]
-    // ) => {
-    //   setPatients(
-    //     patients.map((p) =>
-    //       p.id === id ? { ...p, status } : p
-    //     )
-    //   );
-    // };
 
     return (
       <div className="min-h-screen bg-gray-50">
@@ -1476,19 +1472,45 @@ const App = () => {
     });
     const [showLimits, setShowLimits] = useState(false);
 
-    const handleOnlineConsultation = (id, action) => {
+    // const handleOnlineConsultation = (id, action) => {
+    //   if (action === "accept") {
+    //     const meetingLink =
+    //       "https://meet.google.com/" + Math.random().toString(36).substring(7);
+    //     setPatients(
+    //       patients.map((p) =>
+    //         p.id === id ? { ...p, status: "accepted", meetingLink } : p,
+    //       ),
+    //     );
+    //     alert(`Online consultation accepted! Meeting link: ${meetingLink}`);
+    //   } else {
+    //     setPatients(
+    //       patients.map((p) => (p.id === id ? { ...p, status: "rejected" } : p)),
+    //     );
+    //   }
+    // };
+
+    const handleOnlineConsultation = (
+      id: number,
+      action: "accept" | "reject"
+    ) => {
       if (action === "accept") {
         const meetingLink =
           "https://meet.google.com/" + Math.random().toString(36).substring(7);
+
         setPatients(
           patients.map((p) =>
-            p.id === id ? { ...p, status: "accepted", meetingLink } : p,
-          ),
+            p.id === id
+              ? { ...p, status: "accepted", meetingLink }
+              : p
+          )
         );
+
         alert(`Online consultation accepted! Meeting link: ${meetingLink}`);
       } else {
         setPatients(
-          patients.map((p) => (p.id === id ? { ...p, status: "rejected" } : p)),
+          patients.map((p) =>
+            p.id === id ? { ...p, status: "rejected" } : p
+          )
         );
       }
     };
