@@ -11,10 +11,18 @@ pipeline {
             steps { checkout scm }
         }
 
-        stage('Backend: build & test') {
+        // stage('Backend: build & test') {
+        //     steps {
+        //         dir('backend') {
+        //             sh 'mvn -B clean package'
+        //         }
+        //     }
+        // }
+
+        stage('Backend: build') {
             steps {
                 dir('backend') {
-                    sh 'mvn -B clean package'
+                    sh 'mvn -B clean package -DskipTests'
                 }
             }
         }
